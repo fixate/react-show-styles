@@ -17,9 +17,11 @@ class ShowMargin extends React.Component<IShowMarginProps> {
         style={{
           backgroundColor: '#f7cb9d',
           textAlign: 'center',
+          display: 'grid',
           ...style,
         }}
-        {...restProps}>
+        {...restProps}
+      >
         {children}
       </div>
     );
