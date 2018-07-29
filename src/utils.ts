@@ -19,5 +19,3 @@ export const getCssProps = (reg: RegExp) => {
 
   return parseCssText([].concat(...props).join(''));
 };
-
-export const isObject = (obj: any) => Object.prototype.toString.call(obj) === '[object Object]';
