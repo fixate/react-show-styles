@@ -1,85 +1,77 @@
 import * as React from 'react';
 
-import {isObject} from './utils';
+import {RenderFn, IRenderFnParameter} from './types';
 
-const appendToComponentChildren = (component: any, append: any) => {
-  return {
-    ...component,
-    children: component.children.every(isObject)
-      ? component.children.map((ch: any) => ({
-          ...ch,
-          children: ch.children.concat(append),
-        }))
-      : component.children.concat(append),
-  };
-};
-
-export interface IShowComputedStyleProps {
-  children: React.ReactChild;
-  styleToCompute: string;
-  style?: {[key: string]: string | number};
-  tag?: string;
+export interface IShowComputedStylesProps {
+  children?: RenderFn;
+  render?: RenderFn;
+  stylesToCompute: string[];
+  tag: string;
   [key: string]: any;
 }
 
-export interface IShowComputedStyleState {
-  computedStyle: string | number;
+export interface IShowComputedStylesState {
+  computedStyles: IRenderFnParameter['computedStyles'];
 }
 
-class ShowComputedStyle extends React.Component<IShowComputedStyleProps, IShowComputedStyleState> {
-  public static displayName = 'ShowComputedStyle';
+class ShowComputedStyles extends React.Component<
+  IShowComputedStylesProps,
+  IShowComputedStylesState
+> {
+  public static displayName = 'ShowComputedStyles';
 
-  public static defaultProps: Partial<IShowComputedStyleProps> = {
+  public static defaultProps: Partial<IShowComputedStylesProps> = {
+    stylesToCompute: [],
     tag: 'div',
   };
 
   private elem: HTMLElement;
 
-  private constructor(props: IShowComputedStyleProps) {
+  private constructor(props: IShowComputedStylesProps) {
     super(props);
 
-    this.state = {computedStyle: ''};
+    this.state = {computedStyles: {}};
   }
 
   public componentDidMount() {
-    const {styleToCompute} = this.props;
-
-    if (this.elem.children.length > 1) {
-      throw new Error('ShowComputedStyle expects a single element as a child');
-    }
+    const {stylesToCompute} = this.props;
 
     const el = this.elem.children[0];
 
-    if (!styleToCompute) return;
+    if (!(el instanceof HTMLElement)) {
+      throw new Error(
+        `ShowComputedStyles requires 'children', or 'render' to return an HTML element. Got: ${el}`,
+      );
+    }
 
     const cssDeclaration: CSSStyleDeclaration = window.getComputedStyle(el);
-    const computedStyle = cssDeclaration[styleToCompute as any];
+    const computedStyles = stylesToCompute.reduce(
+      (acc, property) => ({
+        ...acc,
+        [property]: cssDeclaration[property as any],
+      }),
+      {},
+    );
 
-    this.setState({computedStyle});
+    this.setState({computedStyles});
+  }
+
+  public render() {
+    const {computedStyles} = this.state;
+    const {children, render, stylesToCompute, tag, ...restProps} = this.props;
+    const Tag = tag as string;
+    const renderFn = children || render;
+
+    return (
+      <Tag {...restProps} ref={this.setElemRef}>
+        {(renderFn as RenderFn)({computedStyles})}
+      </Tag>
+    );
   }
 
   private setElemRef = (elem: HTMLElement) => {
     this.elem = elem;
   };
-
-  public render() {
-    const {computedStyle} = this.state;
-    const {children, styleToCompute, style, tag, ...restProps} = this.props;
-    const elemStyle = style ? style : {textAlign: 'center'};
-    const computedToAppend = <span> - {computedStyle}</span>;
-    const child = Array.isArray(children)
-      ? children.every(isObject)
-        ? children.map(c => appendToComponentChildren(c, computedToAppend))
-        : children.concat(computedToAppend)
-      : appendToComponentChildren(children, computedToAppend);
-    const Tag = tag as string;
-
-    return (
-      <Tag style={elemStyle} {...restProps} ref={this.setElemRef}>
-        {child}
-      </Tag>
-    );
-  }
 }
 
-export default ShowComputedStyle;
+export default ShowComputedStyles;
