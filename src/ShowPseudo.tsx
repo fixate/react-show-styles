@@ -8,9 +8,9 @@ export interface IShowPseudoState {
 }
 
 export interface IShowPseudoProps {
+  children?: RenderFn;
   className: string;
   pseudoClass: string;
-  children?: RenderFn;
   render?: RenderFn;
 }
 
