@@ -1,13 +1,17 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "target": "es5",
-    "module": "commonjs",
     "declaration": true,
     "jsx": "react",
-    "sourceMap": true,
+    "module": "commonjs",
     "noImplicitAny": true,
-    "outDir": "./"
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "outDir": "./",
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es5"
   },
   "files": ["src/index.tsx"]
 }
