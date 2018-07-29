@@ -33,14 +33,12 @@ class ShowComputedStyle extends React.Component<IShowComputedStyleProps, IShowCo
     tag: 'div',
   };
 
-  private static state = {computedStyle: ''};
-
   private elem: HTMLElement;
 
   private constructor(props: IShowComputedStyleProps) {
     super(props);
 
-    this.elem = null;
+    this.state = {computedStyle: ''};
   }
 
   public componentDidMount() {
@@ -66,7 +64,7 @@ class ShowComputedStyle extends React.Component<IShowComputedStyleProps, IShowCo
 
   public render() {
     const {computedStyle} = this.state;
-    const {children, styleToCompute, style, tag: Tag, ...restProps} = this.props;
+    const {children, styleToCompute, style, tag, ...restProps} = this.props;
     const elemStyle = style ? style : {textAlign: 'center'};
     const computedToAppend = <span> - {computedStyle}</span>;
     const child = Array.isArray(children)
@@ -74,6 +72,7 @@ class ShowComputedStyle extends React.Component<IShowComputedStyleProps, IShowCo
         ? children.map(c => appendToComponentChildren(c, computedToAppend))
         : children.concat(computedToAppend)
       : appendToComponentChildren(children, computedToAppend);
+    const Tag = tag as string;
 
     return (
       <Tag style={elemStyle} {...restProps} ref={this.setElemRef}>

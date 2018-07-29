@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {RenderFn} from './types';
-import {getCssProps, parseCssText} from './utils';
+import {getCssProps} from './utils';
 
 export interface IShowPseudoState {
   style: {[key: string]: string};
@@ -17,7 +17,11 @@ export interface IShowPseudoProps {
 class ShowPseudo extends React.Component<IShowPseudoProps, IShowPseudoState> {
   public static displayName = 'ShowPseudo';
 
-  private static state: IShowPseudoState = {style: {}};
+  public constructor(props: IShowPseudoProps) {
+    super(props);
+
+    this.state = {style: {}};
+  }
 
   public componentDidMount() {
     const {className, pseudoClass} = this.props;
@@ -43,7 +47,7 @@ class ShowPseudo extends React.Component<IShowPseudoProps, IShowPseudoState> {
     const {children, render} = this.props;
     const renderFn = render || children;
 
-    return renderFn({style});
+    return (renderFn as RenderFn)({style});
   }
 }
 

@@ -13,7 +13,7 @@ class ShowPadding extends React.Component<ShowPaddingProps> {
     const renderFn = render || children;
     const style = {backgroundColor: '#c4dcb7'};
 
-    return renderFn({style});
+    return (renderFn as RenderFn)({style});
   }
 }
 
