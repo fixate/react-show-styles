@@ -1,0 +1,15 @@
+.button {
+  background-color: skyblue;
+}
+
+.button:hover {
+  background-color: hotpink;
+}
+
+.button:active {
+  background-color: rebeccapurple;
+}
+
+.button:disabled {
+  background-color: grey;
+}
