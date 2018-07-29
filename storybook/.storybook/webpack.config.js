@@ -1,15 +1,6 @@
 const TSDocgenPlugin = require('react-docgen-typescript-webpack-plugin');
 
 module.exports = (baseConfig, env, config) => {
-  config.plugins.push(
-    new SvgStore({
-      svgoOptions: {
-        plugins: [{removeTitle: true}],
-      },
-      prefix: '',
-    }),
-  );
-
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
     loader: require.resolve('awesome-typescript-loader'),
