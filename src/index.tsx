@@ -1,6 +1,6 @@
-import ShowComputedStyle from './ShowComputedStyle';
+import ShowComputedStyles from './ShowComputedStyles';
 import ShowMargin from './ShowMargin';
 import ShowPadding from './ShowPadding';
 import ShowPseudo from './ShowPseudo';
 
-export {ShowComputedStyle, ShowMargin, ShowPadding, ShowPseudo};
+export {ShowComputedStyles, ShowMargin, ShowPadding, ShowPseudo};
