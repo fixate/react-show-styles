@@ -1,13 +1,13 @@
 import React from 'react';
 
-import ShowComputedStyle from '../../../src/ShowComputedStyle';
+import ShowComputedStyles from '../../../src/ShowComputedStyles';
 
 const ShowComputedStyleStory = () => (
-  <ShowComputedStyle stylesToCompute={['color', 'font-size']}>
+  <ShowComputedStyles stylesToCompute={['color', 'font-size']}>
     {({computedStyles}) => (
       <div style={{fontSize: '11px', color: 'skyblue'}}>{JSON.stringify(computedStyles)}</div>
     )}
-  </ShowComputedStyle>
+  </ShowComputedStyles>
 );
 
 export default ShowComputedStyleStory;
