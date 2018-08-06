@@ -11,4 +11,4 @@ const ShowComputedStyleStory = () => (
   />
 );
 
-export default ShowComputedStyleStorys;
+export default ShowComputedStyleStory;
