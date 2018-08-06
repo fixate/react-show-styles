@@ -1,5 +1,6 @@
 .ignore/
 _site/
+docs/
 node_modules/
 .idea/
 .sass-cache
