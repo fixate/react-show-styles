@@ -2,6 +2,8 @@ import * as React from 'react';
 import {cleanup, render} from 'react-testing-library';
 import 'jest-dom/extend-expect';
 
+import Button from './styles';
+
 import ShowComputedStyles from '../src/ShowComputedStyles';
 
 afterEach(cleanup);
@@ -36,5 +38,12 @@ describe('ShowComputedStyles', () => {
 
       styleProps.map(prop => expect(container).toHaveTextContent(style[prop]));
     });
+  });
+});
+
+describe('something', () => {
+  test('styles', () => {
+    const {container} = render(<div className={styles.testClass} />);
+    debugger;
   });
 });
