@@ -4,6 +4,7 @@ docs/
 node_modules/
 .idea/
 .sass-cache
+.babelrc
 
 __tests__
 .prettierrc
